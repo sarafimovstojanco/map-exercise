@@ -11,7 +11,6 @@ function App() {
     axios.get(apiURL).then(response => setBooks(response.data))
   }
 
-
   useEffect(() => {
     fetchData()
   }, [])
