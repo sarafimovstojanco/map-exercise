@@ -6,7 +6,7 @@ function App() {
 
   const apiURL = "https://www.anapioficeandfire.com/api/books?pageSize=30";
 
-  const [books, setBooks] = useState({})
+  const [books, setBooks] = useState([])
   const fetchData = _ => {
     axios.get(apiURL).then(response => setBooks(response.data))
   }
@@ -17,12 +17,13 @@ function App() {
   }, [])
 
   const renderBooks = _ => {
-    if (Object.keys(books).length === 0 && books.constructor === Object) return
+    if (Object.keys(books).length === 0 && books.constructor === Array) return
+
 
     return (
       <div>
-        {books.map((book) =>
-          <div>
+        {books.map((book, index) =>
+          <div key={index}>
             <p>Name: <a href={book.url}>{book.name}</a></p>
             <p>ISBN: {book.isbn}</p>
             <p>Authors: {book.authors.join(', ')}</p>
