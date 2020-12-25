@@ -1,43 +1,45 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from 'axios';
 import "./App.css";
 
 function App() {
-  
-  const [books, setBooks] = useState('')
-  const apiURL = "https://www.anapioficeandfire.com/api/books?pageSize=30";
-  const fetchData= () => {
-    return axios.get(apiURL).then(response => setBooks(response.data))
-  }
-  
- books &&
-    books.map((book, index) => {
-      const cleanedDate = new Date(book.released).toDateString();
-      const authors = book.authors.join(', ');
-      const name = book.name
-      const country = book.country
-      const numberOfPages = book.numberOfPages
-      console.log(['authors'], authors)
-      console.log(['cleanedDate'], cleanedDate)
-      console.log(['name'], name)
-      console.log(['country'], country)
-      console.log(['numberOfPages'], numberOfPages)
-      
-    })
-//  const book = books.map((book, index) => {
-//      date = book.released
-//      authors = book.authors
-//      name = book.name
-//      country = book.country
-//      numberOfPages = book.numberOfPages
-//   })
 
+  const apiURL = "https://www.anapioficeandfire.com/api/books?pageSize=30";
+
+  const [books, setBooks] = useState([])
+  const fetchData = _ => {
+    axios.get(apiURL).then(response => setBooks(response.data))
+  }
+
+  useEffect(() => {
+    fetchData()
+  }, [])
+
+  const renderBooks = _ => {
+    if (Object.keys(books).length === 0 && books.constructor === Array) return
+
+
+    return (
+      <div>
+        {books.map((book, index) =>
+          <div key={index}>
+            <p>Name: <a href={book.url}>{book.name}</a></p>
+            <p>ISBN: {book.isbn}</p>
+            <p>Authors: {book.authors.join(', ')}</p>
+            <p># Pages: {book.numberOfPages}</p>
+            <hr />
+          </div>
+        )}
+      </div>
+    )
+  }
   return (
     <div className="App" >
-        <button className="fetch-button" onClick={fetchData}>Fetch Data</button>
-        <div>
-          {books.cleanedDate}
-        </div>
+      {/* <button className="fetch-button" onClick={fetchData}>Fetch Data</button> */}
+      <div>
+        {renderBooks()}
+      </div>
     </div>
-)}
+  )
+}
 export default App;
