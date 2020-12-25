@@ -1,43 +1,52 @@
 import React, { useState } from "react";
-import axios from 'axios';
+import Counter from './Counter';
+import Total from './Total';
 import "./App.css";
 
-function App() {
-  
-  const [books, setBooks] = useState('')
-  const apiURL = "https://www.anapioficeandfire.com/api/books?pageSize=30";
-  const fetchData= () => {
-    return axios.get(apiURL).then(response => setBooks(response.data))
+  const App = () => {
+    let data=[
+      { id: 1, value: 1 },
+      { id: 2, value: 2},
+      { id: 3, value: 3 },
+      { id: 4, value: 4}
+    ]
+
+    const Counter = (props) => {
+
+      const [value, setValue] = useState(props.value)
+      
+      const onIncrementHandler = () =>{
+          setValue(value + 1)
+          data = {id:1, value: data[0].value}
+              console.log(['updatedData'],data)
+            }
+      const onDecrementHandler = () =>{
+          setValue(value - 1)
+          }
+      
+          return (
+            <div className="counter">
+              <div className="counter-controls">
+                <button className="button is-danger is-small" onClick={onDecrementHandler}>-</button>
+                <button className="button is-success is-small" onClick={onIncrementHandler}>+</button>
+                {value}
+                {console.log(['Value'],data)}
+            </div>
+            </div>
+          );}
+       
+ return (
+   <div>
+     {data.map(counter => ( 
+          <Counter 
+            key={counter.id} 
+            value={counter.value} 
+            />
+        ))}
+       <Total value={data[0].value + data[1].value + data[2].value + data[3].value} />
+   </div>
+ )
   }
   
- books &&
-    books.map((book, index) => {
-      const cleanedDate = new Date(book.released).toDateString();
-      const authors = book.authors.join(', ');
-      const name = book.name
-      const country = book.country
-      const numberOfPages = book.numberOfPages
-      console.log(['authors'], authors)
-      console.log(['cleanedDate'], cleanedDate)
-      console.log(['name'], name)
-      console.log(['country'], country)
-      console.log(['numberOfPages'], numberOfPages)
-      
-    })
-//  const book = books.map((book, index) => {
-//      date = book.released
-//      authors = book.authors
-//      name = book.name
-//      country = book.country
-//      numberOfPages = book.numberOfPages
-//   })
-
-  return (
-    <div className="App" >
-        <button className="fetch-button" onClick={fetchData}>Fetch Data</button>
-        <div>
-          {books.cleanedDate}
-        </div>
-    </div>
-)}
 export default App;
+
