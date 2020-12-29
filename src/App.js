@@ -52,7 +52,6 @@ const App = () => {
            <tr>
              <RenderTableHeader
               onHeaderClick={onHeaderClick}
-              setStudents={setStudents}
               students={students.slice(0, pageSize)}
               pageSize={pageSize}/>
 
