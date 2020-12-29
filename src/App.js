@@ -70,7 +70,24 @@ const App = () => {
         );
       }
     }
+<<<<<<< HEAD
          return (     
+=======
+
+    const onHeaderClick = headerName => {
+      setStudents(sort(headerName))
+    }
+
+    const sort = param => {
+      return [].concat(students)
+      .sort((a, b) => a[param] < b[param] ? 1 : -1)
+      .map((item, i) => 
+          item
+      );
+    }
+
+      return (     
+>>>>>>> bdc48a0f4179aefb49bd433884aaf490663f6e2e
         <div>
         <h1 id='title'>React Dynamic Table</h1>
         <input 
@@ -86,11 +103,23 @@ const App = () => {
              <RenderTableHeader
               onHeaderClick={onHeaderClick}
               students={students.slice(0, pageSize)}
+<<<<<<< HEAD
               />
             </tr>
             <RenderTableData
             students={newData.slice(0, pageSize)}
             />
+=======
+              pageSize={pageSize}/>
+
+            </tr>
+            <RenderTableData
+            students={students.slice(0, pageSize)}
+            pageSize={pageSize}
+            filtered={searchState.inputValue.toLowerCase()}
+            searching={searchState.searching}/>
+
+>>>>>>> bdc48a0f4179aefb49bd433884aaf490663f6e2e
            </tbody>
            <select value={pageSize} onChange={event => setPageSize(event.target.value)} >
              {
