@@ -1,8 +1,10 @@
-import React from 'react';
-
 const Total = (props) => {
+    let total = 0;
+    for (let id in props.data){
+        total = total + props.data[id].value
+    }
     return(
-        props.value
+        total
     )
 }
 

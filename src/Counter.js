@@ -1,26 +1,24 @@
-import React, { useState } from 'react'
-import Total from './Total'
+import React from 'react'
+import classes from './App.css'
 
 const Counter = (props) => {
 
-    const [value, setValue] = useState(props.value)
-    
-    const onIncrementHandler = () =>{
-        setValue(value + 1)
-          }
-    const onDecrementHandler = () =>{
-        setValue(value - 1)
-        }
-    
-    return (
-      <div className="counter">
-        <div className="counter-controls">
-          <button className="button is-danger is-small" onClick={onDecrementHandler}>-</button>
-          <button className="button is-success is-small" onClick={onIncrementHandler}>+</button>
-          {value}
-      </div>
-      </div>
-    );
-  }
+const onAddHandler = () => {
+  props.mapData(props.index, props.value.id, props.value.value + 1)
+}
 
-  export default Counter
+const onDeductandler = () => {
+  props.mapData(props.index, props.value.id, props.value.value - 1)
+}
+return (
+<div>
+<button className={classes.Button} onClick={onDeductandler}>-</button>
+<button  onClick={onAddHandler}>+</button>
+{props.value.value}
+</div>
+)
+}
+
+
+
+export default Counter;

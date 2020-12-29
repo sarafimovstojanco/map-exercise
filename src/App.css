@@ -1,31 +1,29 @@
-
-p {
-  margin-bottom: 1rem;
-}
-.counter {
-  padding: 10px;
+#title {
+  text-align: center;
+  font-family: arial, sans-serif;
 }
 
-.counter-controls {
-    display: inline-block;
-    margin-left: 10px;
-  }
-button {
-      margin-right: 4px;
-    }
- 
-
-ol.instructions {
-  list-style-type: decimal;
-  margin-left: 1rem;
-  margin-top: .5rem;
+#students {
+  text-align: center;
+  font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  border: 3px solid #ddd;
+  width: 100%;
 }
-li {
-  margin-bottom: 1rem;
-}
-  ol {
-    margin-top: .5rem;
-    margin-left: 2.5rem;
-    list-style-type: decimal;
-  }
 
+#students td, #students th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+#students tr:nth-child(even){background-color: #f2f2f2;}
+
+#students tr:hover {background-color: #ddd;}
+
+#students th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: center;
+  background-color: #4CAF50;
+  color: white;
+}

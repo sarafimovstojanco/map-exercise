@@ -1,52 +1,56 @@
-import React, { useState } from "react";
-import Counter from './Counter';
-import Total from './Total';
-import "./App.css";
+import { useState } from 'react';
+import * as data from './Data'
+import RenderTableData from './RenderTableData';
+import RenderTableHeader from './RenderTableHeader.js';
+import './App.css';
+import React from 'react'
 
-  const App = () => {
-    let data=[
-      { id: 1, value: 1 },
-      { id: 2, value: 2},
-      { id: 3, value: 3 },
-      { id: 4, value: 4}
-    ]
+const App = () => {
+   const [students, setStudents] = useState(data.data)
+   const [pageSize, setPageSize] = useState(Number(students.length)) 
+   const [searchState, setSearchState] = useState({
+     inputValue:'',
+     searching: false
+    })
 
-    const Counter = (props) => {
+    // var userId = students.map(item => item.userId);
+    // var id = students.map(item => item.id);
+    // var title = students.map(item => item.title);
+    // var completed = students.map(item => item.completed);
 
-      const [value, setValue] = useState(props.value)
-      
-      const onIncrementHandler = () =>{
-          setValue(value + 1)
-          data = {id:1, value: data[0].value}
-              console.log(['updatedData'],data)
-            }
-      const onDecrementHandler = () =>{
-          setValue(value - 1)
-          }
-      
-          return (
-            <div className="counter">
-              <div className="counter-controls">
-                <button className="button is-danger is-small" onClick={onDecrementHandler}>-</button>
-                <button className="button is-success is-small" onClick={onIncrementHandler}>+</button>
-                {value}
-                {console.log(['Value'],data)}
-            </div>
-            </div>
-          );}
-       
- return (
-   <div>
-     {data.map(counter => ( 
-          <Counter 
-            key={counter.id} 
-            value={counter.value} 
-            />
-        ))}
-       <Total value={data[0].value + data[1].value + data[2].value + data[3].value} />
-   </div>
- )
-  }
-  
-export default App;
+    function onChangeHandler (event) {
+      if(event.target.value.length >=1 ){
+        setSearchState({ inputValue: event.target.value, searching: true})
+      }
+      else {setSearchState({ inputValue: event.target.value, searching: false})}
+    }
+      return (     
+        <div>
+        <h1 id='title'>React Dynamic Table</h1>
+        <input 
+          type="text"
+          value={searchState.inputValue}
+          id="search-input"
+          placeholder="Search..."
+          onChange={onChangeHandler}
+        ></input>
+        <table id='students'>
+           <tbody>
+           <tr><RenderTableHeader students={students.slice(0, pageSize)} pageSize={pageSize}/></tr>
+               <RenderTableData students={students.slice(0, pageSize)} pageSize={pageSize} filtered={searchState.inputValue.toLowerCase()} searching={searchState.searching}/>
+           </tbody>
+           <select value={pageSize} onChange={event => setPageSize(event.target.value)} >
+             {
+               [10, 25, 50, 100, Number(students.length)].map(pageSize => (
+                 <option key={pageSize} value={pageSize}>
+                   Show: {pageSize}
+                 </option>
+               ))
+             }
+           </select>
+        </table>
+     </div>
+      )
+   }
 
+export default App
